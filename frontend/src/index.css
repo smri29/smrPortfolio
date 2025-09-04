@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: theme('colors.white');
+}
+
+.dark body {
+  background-color: theme('colors.neutral.950');
+}
+html {
+  scroll-behavior: smooth;
+}
