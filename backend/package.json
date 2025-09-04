@@ -4,6 +4,9 @@
   "description": "SMTP contact API for portfolio",
   "license": "ISC",
   "main": "dist/index.js",
+  "engines": {
+    "node": ">=18 <23"
+  },
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc",
@@ -11,20 +14,17 @@
     "typecheck": "tsc --noEmit",
     "health": "curl -s http://localhost:${PORT:-5000}/api/health || true"
   },
-  "engines": {
-    "node": ">=18 <23"
-  },
   "keywords": [],
   "author": "",
   "dependencies": {
+    "@types/node": "^24.3.0",
     "compression": "^1.8.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "express-rate-limit": "^8.0.1",
     "helmet": "^8.1.0",
-    "nodemailer": "^7.0.5",
-    "@types/node": "^24.3.0"
+    "nodemailer": "^7.0.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
