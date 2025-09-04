@@ -10,7 +10,7 @@
     "resolveJsonModule": true,
 
     "lib": ["ES2020"],
-    "typeRoots": ["./node_modules/@types"],
+    "types": ["node"],
 
     "sourceMap": true,
     "declaration": true,
