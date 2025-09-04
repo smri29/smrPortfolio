@@ -2,11 +2,25 @@ import express from "express";
 import cors from "cors";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+import path from "path";
+import compression from "compression";
+import helmet from "helmet";
 
 dotenv.config();
 
 const app = express();
+
+// ----------------------
+// Core middleware
+// ----------------------
 app.use(express.json());
+app.use(compression());
+app.use(
+  helmet({
+    // Disable CSP by default to avoid blocking inline styles from Vite build, etc.
+    contentSecurityPolicy: false,
+  })
+);
 
 // ----------------------
 // CORS
@@ -109,7 +123,7 @@ app.post("/api/contact", async (req, res) => {
 
     const info = await transporter.sendMail({
       from: `"Portfolio Contact" <${SMTP_USER}>`, // must match Gmail user
-      to: "smri29.ml@gmail.com",                  // your inbox
+      to: "smri29.ml@gmail.com", // your inbox
       subject: `New message from ${name}`,
       replyTo: email,
       html,
@@ -121,6 +135,18 @@ app.post("/api/contact", async (req, res) => {
     console.error("[MAIL ERROR]", err?.response || err?.message || err);
     res.status(500).json({ error: "Internal Server Error" });
   }
+});
+
+// ----------------------
+// Static: serve React build
+// (frontend/dist is copied to backend/public at build time)
+// ----------------------
+const publicDir = path.join(__dirname, "public");
+app.use(express.static(publicDir));
+
+// SPA fallback for client-side routes
+app.get("*", (_req, res) => {
+  res.sendFile(path.join(publicDir, "index.html"));
 });
 
 // ----------------------
