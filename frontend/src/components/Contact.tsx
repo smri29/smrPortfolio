@@ -8,6 +8,10 @@ export default function Contact() {
   const [state, setState] = useState<SendState>("idle");
   const [errMsg, setErrMsg] = useState<string>("");
 
+  // Frontend API base (empty in dev so Vite proxy handles /api)
+  const API_BASE = import.meta.env.VITE_API_BASE || "";
+
+  // Show a few primary links
   const quickLinks = useMemo(
     () =>
       LINKS.filter((l) =>
@@ -16,7 +20,7 @@ export default function Contact() {
     []
   );
 
-  const CV_PATH = "/cv/smri29.pdf"; // <-- public/cv/smri29.pdf
+  const CV_PATH = "/cv/smri29.pdf"; // public/cv/smri29.pdf
 
   return (
     <Section id="contact" title="Contact">
@@ -30,13 +34,11 @@ export default function Contact() {
       {/* Quick contact buttons */}
       <div className="mt-4 flex flex-wrap gap-2">
         {quickLinks.map((l) => {
-          const isEmail = l.label === "Email";
           const isCV = l.label === "CV / Resume";
-
-          // For CV, force local file path and download behavior
           const href = isCV ? CV_PATH : l.href;
-          const target = isEmail || isCV ? undefined : "_blank";
-          const rel = isEmail || isCV ? undefined : "noopener noreferrer";
+          // Open external links in a new tab; keep CV same-tab to allow download
+          const target = isCV ? undefined : "_blank";
+          const rel = isCV ? undefined : "noopener noreferrer";
 
           return (
             <a
@@ -44,7 +46,6 @@ export default function Contact() {
               href={href}
               target={target}
               rel={rel}
-              // download attribute ensures save-as dialog for same-origin file
               {...(isCV ? { download: "Shah_Mohammad_Rizvi_CV.pdf" } : {})}
               className="text-sm px-3 py-1.5 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:shadow transition bg-white/70 dark:bg-neutral-900/70 backdrop-blur"
             >
@@ -84,7 +85,7 @@ export default function Contact() {
           }
 
           try {
-            const res = await fetch("/api/contact", {
+            const res = await fetch(`${API_BASE}/api/contact`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(payload),

@@ -1,55 +1,46 @@
-# -------------------------------------------------
-# OS & editor junk
-# -------------------------------------------------
-.DS_Store
-Thumbs.db
-*.log
-*.swp
-*.swo
-.vscode/
-.idea/
-*.iml
-
-# -------------------------------------------------
-# Node
-# -------------------------------------------------
+# Node dependencies
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-.pnpm-debug.log*
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
 
-# -------------------------------------------------
-# Build artifacts
-# -------------------------------------------------
+# Build outputs
 dist/
 build/
+.out/
+.next/
 .cache/
-.eslintcache
-coverage/
+vite-dist/
+
+# TypeScript
 *.tsbuildinfo
 
-# -------------------------------------------------
-# Env & secrets
-# -------------------------------------------------
+# Logs
+logs
+*.log
+*.log.*
+lerna-debug.log*
+
+# Environment variables (VERY IMPORTANT!)
 .env
-.env.*
-!.env.example
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# -------------------------------------------------
-# Frontend (Vite, React)
-# -------------------------------------------------
-frontend/node_modules/
-frontend/dist/
-frontend/.vite/
+# IDE/editor junk
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
 
-# -------------------------------------------------
-# Backend (TypeScript, Express)
-# -------------------------------------------------
-backend/node_modules/
-backend/dist/
-backend/.tscache/
+# Coverage/test
+coverage/
+*.lcov
+
+# Misc
+*.bak
+*.tmp
